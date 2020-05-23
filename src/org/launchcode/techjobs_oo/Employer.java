@@ -12,9 +12,9 @@ public class Employer {
         nextId++;
     }
 
-    public Employer(String value) {
+    public Employer(String aValue) {
         this();
-        this.value = value;
+        this.value = aValue;
     }
 
     // Custom toString, equals, and hashCode methods:
