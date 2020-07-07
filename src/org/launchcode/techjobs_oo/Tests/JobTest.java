@@ -3,64 +3,47 @@ package org.launchcode.techjobs_oo.Tests;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.launchcode.techjobs_oo.*;
 
 import static org.junit.Assert.*;
 
 public class JobTest {
-    Job testJob1;
-    Job testJob2;
+    Job job1;
+    Job job2;
+    Job job3;
+
+    @Test
+    public void testSettingJobId(){
+        int job1Id = job1.getId();
+        int job2Id = job2.getId();
+        assertTrue(job2Id-job1Id == 1);
+    }
 
     @Before
-    public void setup() {
-        testJob1 = new Job();
-        testJob2 = new Job();
+    public void createJobObjects(){
+        job1 = new Job();
+        job2 = new Job();
     }
 
     @Test
-    public void testSettingJobId() {
-        assertEquals(testJob1.getId() + 1, testJob2.getId());
+    public void testJobConstructorSetsAllFields(){
+        job3 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        assertEquals("Product tester", job3.getName());
+        assertEquals("ACME", job3.getEmployer().getValue());
+        assertEquals("Desert", job3.getLocation().getValue());
+        assertEquals("Quality control", job3.getPositionType().getValue());
+        assertEquals("Persistence", job3.getCoreCompetency().getValue());
+        assertTrue(job3.getEmployer() instanceof Employer);
+        assertTrue(job3.getLocation() instanceof Location);
+        assertTrue(job3.getPositionType() instanceof PositionType);
+        assertTrue(job3.getCoreCompetency() instanceof CoreCompetency);
     }
 
     @Test
-    public void testJobConstructorSetsAllFields() {
-
-        Job checker = new Job("Product tester", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency("Persistence"));
-
-        assert(checker.getName() != null);
-        assert(checker.getEmployer() != null);
-        assert(checker.getLocation() != null);
-        assert(checker.getPositionType() != null);
-        assert(checker.getCoreCompetency() != null);
-    }
-    @Test
-    public void testJobsForEquality() {
-        assertNotEquals(testJob1, testJob2);
-    }
-
-    @Test
-    public void testToStringToBeginAndEndWithBlankLines() {
-        Job job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        assertTrue(job.toString().startsWith(" "));
-        assertTrue(job.toString().endsWith( " " ));
-    }
-    @Test
-    public void itShouldMatchExample() {
-        Job job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-
-        assertTrue(job.toString().contains("ID: "));
-        assertTrue(job.toString().contains("Name: "));
-        assertTrue(job.toString().contains("Employer: "));
-        assertTrue(job.toString().contains("Location: "));
-        assertTrue(job.toString().contains("Position Type: "));
-        assertTrue(job.toString().contains("Core Competency: "));
-    }
-    @Test
-    public void missingData() {
-        Job job = new Job( "Ape Handler", new Employer("ACME"), new Location("Desert"),
-                new PositionType("Quality control"), new CoreCompetency());
-
-        assertTrue(job.toString().contains("Data not available"));
+    public void testJobsForEquality(){
+        Job aJob = new Job("Dev", new Employer("Employer"), new Location("The Moon"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        Job anotherJob = new Job("Dev", new Employer("Employer"), new Location("The Moon"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        assertNotEquals(aJob, anotherJob);
     }
 }
